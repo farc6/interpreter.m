@@ -4,4 +4,6 @@ CC = clang
 compile:
 	$(CC) compiler.m $(CFLAGS)
 
+clean:
+	rm -f a.out
 
