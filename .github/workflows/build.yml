@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: compile
+        run: make compile
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: exec
+          path: a.out
