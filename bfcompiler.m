@@ -76,7 +76,6 @@
                 }
                 break;
             default:
-                NSLog(@"ptr out of mem bounds");
                 break;
         }
         _ip++;
