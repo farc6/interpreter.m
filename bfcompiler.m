@@ -1,8 +1,3 @@
-/*
- * barebone bf/brainfuck compiler
- * usage: clang bfcompiler.m -framework Cocoa
- */ 
-
 #import <Foundation/Foundation.h>
 
 @interface bfcompiler : NSObject
