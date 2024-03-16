@@ -1,13 +1,13 @@
 #import <Foundation/Foundation.h>
 
-@interface bfcompiler : NSObject
+@interface interpreter : NSObject
 
 - (instancetype)iwf:(NSString *)fn;
 - (void)compile;
 
 @end
 
-@implementation bfcompiler
+@implementation interpreter
 {
     NSString *_code;
     unsigned char _mem[30000];
@@ -92,7 +92,7 @@ int main(int argc, const char * argv[])
             return 1;
         }
         NSString *fn = [NSString stringWithUTF8String:argv[1]];
-        bfcompiler *compiler = [[bfcompiler alloc] iwf:fn];
+        interpreter *compiler = [[interpreter alloc] iwf:fn];
         [compiler compile];
     }
     return 0;
