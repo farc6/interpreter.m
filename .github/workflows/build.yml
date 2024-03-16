@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: compile
-        run: clang compiler.m -Wall -Werror -Wextra -framework Cocoa
+        run: clang interpreter.m -Wall -Werror -Wextra -framework Cocoa
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
