@@ -3,33 +3,34 @@
 @interface interpreter : NSObject
 
 - (instancetype)iwf:(NSString *)fn;
-- (void)compile;
-
+- (void)bfi; // brainfuck interpreter theres a github repo name bfi btw :(
+             // shortened alot of stuff
+             // _c = code, _mem = memory, _ptr = pointer, _i = instructions.
 @end
 
 @implementation interpreter
 {
-    NSString *_code;
+    NSString *_c;
     unsigned char _mem[30000];
     unsigned char *_ptr;
-    NSUInteger _ip;
+    NSUInteger _i;
 }
 
 - (instancetype)iwf:(NSString *)fn
 {
     self = [super init];
     if (self) {
-        _code = [NSString stringWithContentsOfFile:fn encoding:NSUTF8StringEncoding error:nil];
+        _c = [NSString stringWithContentsOfFile:fn encoding:NSUTF8StringEncoding error:nil];
         _ptr = _mem;
-        _ip = 0;
+        _i = 0;
     }
     return self;
 }
 
-- (void)compile 
+- (void)bfi 
 {
-    while (_ip < _code.length) {
-        unichar ch = [_code characterAtIndex:_ip];
+    while (_i < _c.length) {
+        unichar ch = [_c characterAtIndex:_i];
         switch (ch) {
             case '>':
                 _ptr++;
@@ -53,10 +54,10 @@
                 if (*_ptr == 0) {
                     NSUInteger loopCount = 1;
                     while (loopCount != 0) {
-                        _ip++;
-                        if ([_code characterAtIndex:_ip] == '[') {
+                        _i++;
+                        if ([_c characterAtIndex:_i] == '[') {
                             loopCount++;
-                        } else if ([_code characterAtIndex:_ip] == ']') {
+                        } else if ([_c characterAtIndex:_i] == ']') {
                             loopCount--;
                         }
                     }
@@ -66,10 +67,10 @@
                 if (*_ptr != 0) {
                     NSUInteger loopCount = 1;
                     while (loopCount != 0) {
-                        _ip--;
-                        if ([_code characterAtIndex:_ip] == ']') {
+                        _i--;
+                        if ([_c characterAtIndex:_i] == ']') {
                             loopCount++;
-                        } else if ([_code characterAtIndex:_ip] == '[') {
+                        } else if ([_c characterAtIndex:_i] == '[') {
                             loopCount--;
                         }
                     }
@@ -78,7 +79,7 @@
             default:
                 break;
         }
-        _ip++;
+        _i++;
     }
 }
 
@@ -92,8 +93,8 @@ int main(int argc, const char * argv[])
             return 1;
         }
         NSString *fn = [NSString stringWithUTF8String:argv[1]];
-        interpreter *compiler = [[interpreter alloc] iwf:fn];
-        [compiler compile];
+        interpreter *interpret = [[interpreter alloc] iwf:fn];
+        [interpret bfi];
     }
     return 0;
 }
